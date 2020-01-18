@@ -1,0 +1,951 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!-- saved from url=(0070)https://www.mimuw.edu.pl/~awojna/SID/referaty/strzelczak/c4_5Main.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-2">
+<title>Drzewo decyzyjne C4.5, czyli jak nauczyć komputer odróżniać dobro od zła</title>
+<meta name="description" content="Drzewo decyzyjne C4.5, czyli jak nauczyć komputer odróżniać dobro od zła">
+<meta name="keywords" content="c4_5Main">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+
+
+<meta name="Generator" content="jLaTeX2HTML v2002 JA patch-1.4">
+<meta http-equiv="Content-Style-Type" content="text/css">
+
+<link rel="STYLESHEET" href="./Drzewo decyzyjne C4.5, czyli jak nauczyć komputer odróżniać dobro od zła_files/c4_5Main.css">
+
+</head>
+
+<body>
+<!--Navigation Panel-->
+<img width="81" height="24" align="BOTTOM" border="0" alt="next_inactive" src="./Drzewo decyzyjne C4.5, czyli jak nauczyć komputer odróżniać dobro od zła_files/nx_grp_g.png"> 
+<img width="26" height="24" align="BOTTOM" border="0" alt="up" src="./Drzewo decyzyjne C4.5, czyli jak nauczyć komputer odróżniać dobro od zła_files/up_g.png"> 
+<img width="63" height="24" align="BOTTOM" border="0" alt="previous" src="./Drzewo decyzyjne C4.5, czyli jak nauczyć komputer odróżniać dobro od zła_files/prev_g.png">   
+<br>
+<br>
+<br>
+<!--End of Navigation Panel-->
+
+  <h1 align="CENTER">Drzewo decyzyjne C4.5, czyli jak nauczyć komputer odróżniać dobro od zła</h1>
+<p align="CENTER"><strong>Urszula Herman-Iżycka 
+<br>
+Przemysław Strzelczak</strong></p>
+<p align="CENTER"><strong>19. marca 2004</strong></p>
+  <br>
+
+<h2><a name="SECTION00010000000000000000">
+Spis rzeczy</a>
+</h2>
+<!--Table of Contents-->
+
+<ul>
+<li><a name="tex2html32" href="https://www.mimuw.edu.pl/~awojna/SID/referaty/strzelczak/c4_5Main.html">Wprowadzenie</a>
+</li><li><a name="tex2html33" href="https://www.mimuw.edu.pl/~awojna/SID/referaty/strzelczak/c4_5Main.html#SECTION00030000000000000000">Definicja drzewa decyzyjnego</a>
+</li><li><a name="tex2html34" href="https://www.mimuw.edu.pl/~awojna/SID/referaty/strzelczak/c4_5Main.html#SECTION00040000000000000000">Pomocnicze definicje</a>
+<ul>
+<li><a name="tex2html35" href="https://www.mimuw.edu.pl/~awojna/SID/referaty/strzelczak/c4_5Main.html#SECTION00041000000000000000">Entropia rozkładu prawdopodobieństwa</a>
+</li><li><a name="tex2html36" href="https://www.mimuw.edu.pl/~awojna/SID/referaty/strzelczak/c4_5Main.html#SECTION00042000000000000000">Podział na klasy</a>
+</li><li><a name="tex2html37" href="https://www.mimuw.edu.pl/~awojna/SID/referaty/strzelczak/c4_5Main.html#SECTION00043000000000000000">Informacja atrybutu</a>
+</li><li><a name="tex2html38" href="https://www.mimuw.edu.pl/~awojna/SID/referaty/strzelczak/c4_5Main.html#SECTION00044000000000000000">Gain(X,T)</a>
+</li><li><a name="tex2html39" href="https://www.mimuw.edu.pl/~awojna/SID/referaty/strzelczak/c4_5Main.html#SECTION00045000000000000000">Gain Ratios</a>
+</li></ul>
+<br>
+</li><li><a name="tex2html40" href="https://www.mimuw.edu.pl/~awojna/SID/referaty/strzelczak/c4_5Main.html#SECTION00050000000000000000">Algorytm ID3</a>
+</li><li><a name="tex2html41" href="https://www.mimuw.edu.pl/~awojna/SID/referaty/strzelczak/c4_5Main.html#SECTION00060000000000000000">Cechy algorytmu ID3</a>
+</li><li><a name="tex2html42" href="https://www.mimuw.edu.pl/~awojna/SID/referaty/strzelczak/c4_5Main.html#SECTION00070000000000000000">C4.5, czyli dlaczego ID3 nam nie wystarczy?</a>
+<ul>
+<li><a name="tex2html43" href="https://www.mimuw.edu.pl/~awojna/SID/referaty/strzelczak/c4_5Main.html#SECTION00071000000000000000">Lekarstwo na techniczne ograniczenia ID3</a>
+</li><li><a name="tex2html44" href="https://www.mimuw.edu.pl/~awojna/SID/referaty/strzelczak/c4_5Main.html#SECTION00072000000000000000">Przycinanie, czyli główny pomysł C4.5</a>
+</li></ul>
+<br>
+</li><li><a name="tex2html45" href="https://www.mimuw.edu.pl/~awojna/SID/referaty/strzelczak/c4_5Main.html#SECTION00080000000000000000">Implementacja algorytmu C4.5</a>
+<ul>
+<li><a name="tex2html46" href="https://www.mimuw.edu.pl/~awojna/SID/referaty/strzelczak/c4_5Main.html#SECTION00081000000000000000">Nazewnictwo</a>
+</li><li><a name="tex2html47" href="https://www.mimuw.edu.pl/~awojna/SID/referaty/strzelczak/c4_5Main.html#SECTION00082000000000000000">Wyniki</a>
+</li></ul>
+<br>
+</li><li><a name="tex2html48" href="https://www.mimuw.edu.pl/~awojna/SID/referaty/strzelczak/c4_5Main.html#SECTION00090000000000000000">About this document ...</a>
+</li></ul>
+<!--End of Table of Contents-->  
+<h1><a name="SECTION00020000000000000000">
+Wprowadzenie</a>
+</h1>
+
+<p>
+
+</p><h4><a name="SECTION00020010000000000000">
+Idea</a>
+</h4>
+Człowiek posiada tę umiejętność, że na podstawie przeszłych doświadczeń
+potrafi trafnie sklasyfikować nowy przypadek i podjąć wobec niego 
+dobrą decyzję. My więc chcielibyśmy tego samego nauczyć komputer.
+Dając mu ''bagaż'' doświadczeń, czyli informację o przypadkach 
+określonego typu, chcielibyśmy, aby podejmował racjonalną decyzję.
+Racjonalną znaczy najbliższą indukowanym regułom, które w jego mniemaniu 
+zostały użyte do podjęcia tych dobrych decyzji i jednocześnie o
+niskim przewidywalnym poziomie pomyłek.
+
+<p>
+Do tych właśnie celów wymyślono <i>drzewa decyzyjne</i>, które na stałe 
+wpisały się w poczet elementów uczenia maszynowego.
+Na podstawie dostarczonego zbioru faktów i reguł maszyna uczy się jak 
+sklasyfikować nowe przypadki. Zbiór faktów na podstawie, których będziemy
+wnioskować nazywamy <tt>Training Set</tt>, natomiast nowe przypadki, które
+będziemy chcieli zaklasyfikować to <tt>Test Set</tt>.
+Klasyfikacja polega na stwierdzeniu w jakiej kategorii umieścić nowy przypadek,
+zwykle jest to podział binarny na <tt>true</tt> lub <tt>false</tt> itp.
+Training Set jest zbiorem rekordów o tej samej strukturze, na którą składają 
+się pary typu atrybut/wartość atrybutu. Ponadto każdy rekord jest 
+przyporządkowany do odpowiedniej kategorii. Na podstawie wartości tych atrybutów 
+i Training Set próbujemy sklasyfikować nowe przypadki, w których
+mamy dane jedynie atrybuty i ich wartości.
+
+</p><p>
+Oto przykład wzięty z giełdy:
+
+</p><p>
+</p><pre>	ATTRIBUTE   |	POSSIBLE VALUES
+	============+=======================
+	age	    | old, midlife, new
+	------------+-----------------------
+	competition | no, yes
+	------------+-----------------------
+	type        | software, hardware
+	------------+-----------------------
+
+
+	AGE	| COMPETITION | TYPE	| PROFIT
+	=========================================
+	old	| yes	      | swr	| down
+	--------+-------------+---------+--------
+	old	| no	      | swr 	| down
+	--------+-------------+---------+--------
+	old	| no	      | hwr	| down
+	--------+-------------+---------+--------
+	mid	| yes	      | swr	| down
+	--------+-------------+---------+--------
+	mid	| yes	      | hwr	| down
+	--------+-------------+---------+--------
+	mid	| no	      | hwr	| up
+	--------+-------------+---------+--------
+	mid	| no	      | swr	| up
+	--------+-------------+---------+--------
+	new	| yes	      | swr	| up
+	--------+-------------+---------+--------
+	new	| no	      | hwr	| up
+	--------+-------------+---------+--------
+	new	| no	      | swr	| up
+	--------+-------------+---------+--------
+</pre>
+
+<p>
+A także przykład golfowy, z którego będziemy często korzystać. Na podstawie
+warunków atmosferycznych określamy czy będziemy grać w golfa czy nie.
+
+</p><p>
+</p><pre>	ATTRIBUTE   |	POSSIBLE VALUES
+	============+=======================
+	outlook	    | sunny, overcast, rain
+	------------+-----------------------
+	temperature | continuous
+	------------+-----------------------
+	humidity    | continuous
+	------------+-----------------------
+	windy       | true, false
+	============+=======================
+
+
+	OUTLOOK | TEMPERATURE | HUMIDITY | WINDY | PLAY
+	=====================================================
+	sunny   |      85     |    85    | false | Don't Play
+	sunny   |      80     |    90    | true  | Don't Play
+	overcast|      83     |    78    | false | Play
+	rain    |      70     |    96    | false | Play
+	rain    |      68     |    80    | false | Play
+	rain    |      65     |    70    | true  | Don't Play
+	overcast|      64     |    65    | true  | Play
+	sunny   |      72     |    95    | false | Don't Play
+	sunny   |      69     |    70    | false | Play
+	rain    |      75     |    80    | false | Play
+	sunny   |      75     |    70    | true  | Play
+	overcast|      72     |    90    | true  | Play
+	overcast|      81     |    75    | false | Play
+	rain    |      71     |    80    | true  | Don't Play
+</pre>
+  
+<h1><a name="SECTION00030000000000000000">
+Definicja drzewa decyzyjnego</a>
+</h1>
+
+<p>
+Drzewo decyzyjne jest odpowiednio zbudowanym drzewem o następujących 
+własnościach:
+
+</p><ul>
+<li>W każdym węźle drzewa umieszczony jest jeden z atrybutów.
+</li>
+<li>Każda krawędź wychodząca z danego węzła jest etykietowana jedną z możliwych
+wartości atrybutu ojca.
+</li>
+<li>Liściem w takim drzewie jest wartość ze zbioru kategorii, jaką 
+przyporządkujemy rekordom mającym takie wartości, jakie znajdują się na ścieżce
+od korzenia do liścia.
+</li>
+<li>Na każdym poziomie w drzewie mogą się znajdować zarówno węzły z atrybutami, 
+jak i liście.
+</li>
+</ul>
+
+<p>
+Ponadto dobrze zbudowane drzewo decyzyjne 
+(tzn. takie, które szybko potrafi zwrócić kategorię) 
+ma odpowiednio rozmieszczone atrybuty w węzłach:
+
+</p><ul>
+<li>W korzeniu znajduje się atrybut, który zawiera ,,najwięcej informacji''
+(tzn. jego wartości mają większy wpływ na wynik niż pozostałe)
+</li>
+<li>Dalej drzewo budowane jest rekurencyjnie zgodnie z zasadą umieszczania
+w korzeniu atrybutów z ,,największą informacją''.
+</li>
+</ul>
+
+<p>
+Drzewo decyzyjne w przykładzie giełdowym:
+</p><pre>			 Age
+		       / |    \
+		      /  |     \
+		  new/   |mid   \old
+		    /    |       \
+		  Up  Competition Down
+                       /      \
+		      /        \
+		   no/          \yes
+		    /            \
+		  Up             Down
+</pre>
+
+<p>
+Natomiast w przykładzie golfowym drzewo decyzyjne wygląda tak:
+(wierząc autorowi artykułu :-)
+</p><pre>			Outlook
+		       / |     \
+		      /  |      \
+            overcast /   |sunny  \rain
+                    /    |        \
+	         Play   Humidity   Windy
+		       /   |         |  \
+                      /    |         |   \
+		&lt;=75 /  &gt;75|     true|    \false
+		    /      |         |     \
+                 Play   Don'tPlay Don'tPlay Play
+</pre>
+  
+<h1><a name="SECTION00040000000000000000">
+Pomocnicze definicje</a>
+</h1>
+
+<p>
+Aby przystąpić do budowy drzewa potrzebujemy jeszcze kilku definicji, a przede
+wszystkim określić jak wybrać spośród atrybutów ten, który zawiera ,,najwięcej
+informacji''.
+
+</p><p>
+
+</p><h2><a name="SECTION00041000000000000000">
+Entropia rozkładu prawdopodobieństwa</a>
+</h2>
+
+<p>
+Mając zadany rozkład prawdopodobieństwa P=(p1, p2, ..., pn) określamy 
+<tt>Informację, jaką przechowuje ten rozkład</tt> (<tt>Entropię P</tt>) jako:
+
+</p><p>
+<!-- MATH
+ $I(P) = -(p_1* \log(p_1) + p_2* \log(p_2) + \ldots + p_n* \log(p_n))$
+ -->
+<img width="464" height="37" align="MIDDLE" border="0" src="./Drzewo decyzyjne C4.5, czyli jak nauczyć komputer odróżniać dobro od zła_files/img1.png" alt="$I(P) = -(p_1* \log(p_1) + p_2* \log(p_2) + \ldots + p_n* \log(p_n))$">
+
+</p><p>
+Im bardziej jednorodny rozkład prawdopodobieństwa, tym większa jest jego
+informacja:
+
+</p><ul>
+<li>P=(0.5, 0.5)   I(P)=1
+</li>
+<li>P=(0.67, 0.33) I(P)=0.92
+</li>
+<li>P=(1, 0)       I(P)=0
+</li>
+</ul>
+
+<p>
+
+</p><h2><a name="SECTION00042000000000000000">
+Podział na klasy</a>
+</h2>
+
+<p>
+Podzielmy zbiór rekordów T na rozłączne klasy C1, C2, ..., Ck według 
+wartości ich atrybutu kategorii. Informację potrzebną, by stwierdzić do której
+klasy należy element ze zbioru oznaczmy przez 
+
+</p><p>
+<!-- MATH
+ $Info(T) = I(P)$
+ -->
+<img width="138" height="37" align="MIDDLE" border="0" src="./Drzewo decyzyjne C4.5, czyli jak nauczyć komputer odróżniać dobro od zła_files/img2.png" alt="$Info(T) = I(P)$">
+
+</p><p>
+gdzie P jest rozkładem prawdopodobieństwa podziału (C1, C2, ..., Ck) zadanym
+następująco
+
+</p><p>
+<!-- MATH
+ $P = (\frac{C_1}{T}, \frac{C_2}{T}, \ldots, \frac{C_k}{T})$
+ -->
+<img width="170" height="41" align="MIDDLE" border="0" src="./Drzewo decyzyjne C4.5, czyli jak nauczyć komputer odróżniać dobro od zła_files/img3.png" alt="$P = (\frac{C_1}{T}, \frac{C_2}{T}, \ldots, \frac{C_k}{T})$">
+
+</p><p>
+W przykładzie z giełdą mamy:
+
+</p><p>
+<!-- MATH
+ $Info(T) = I(\frac{5}{10},\frac{5}{10}) = 1.0$
+ -->
+<img width="215" height="39" align="MIDDLE" border="0" src="./Drzewo decyzyjne C4.5, czyli jak nauczyć komputer odróżniać dobro od zła_files/img4.png" alt="$Info(T) = I(\frac{5}{10},\frac{5}{10}) = 1.0$">
+
+</p><p>
+gdyż mamy dwie klasy (Up, Down) i w naszym Training Set dokładnie 5 entek
+spośród 10 miało kategorię Up i dokładnie 5- Down.
+
+</p><p>
+
+</p><h2><a name="SECTION00043000000000000000">
+Informacja atrybutu</a>
+</h2>
+
+<p>
+Podzielmy zbiór T na podstawie wartości atrybutu X na podzbiory T1, T2, .., Tn.
+Informacja potrzebna, by stwierdzić do jakiej klasy należy element z T jest
+średnią ważoną informacji potrzebnych, by stwierdzić do jakiej klasy należy
+element Ti:
+
+</p><p>
+<!-- MATH
+ $Info(X,T) = \sum_{i = 1}^{n} \frac{\|T_i\|}{\|T\|} * Info(T_i)$
+ -->
+<img width="287" height="45" align="MIDDLE" border="0" src="./Drzewo decyzyjne C4.5, czyli jak nauczyć komputer odróżniać dobro od zła_files/img5.png" alt="$Info(X,T) = \sum_{i = 1}^{n} \frac{\Vert T_i\Vert}{\Vert T\Vert} * Info(T_i)$">
+
+</p><p>
+W golfowym przykładzie obliczenia są następujące:
+
+</p><p>
+<!-- MATH
+ $Info(Outlook,T) = \frac{5}{14} * I(\frac{2}{5}, \frac{3}{5}) + 
+                   \frac{4}{14} * I(\frac{4}{4},0) + 
+                   \frac{5}{14} * I(\frac{3}{5}, \frac{2}{5}) = 0.694$
+ -->
+<img width="554" height="39" align="MIDDLE" border="0" src="./Drzewo decyzyjne C4.5, czyli jak nauczyć komputer odróżniać dobro od zła_files/img6.png" alt="$Info(Outlook,T) = \frac{5}{14} * I(\frac{2}{5}, \frac{3}{5}) +
+\frac{4}{14} * I(\frac{4}{4},0) +
+\frac{5}{14} * I(\frac{3}{5}, \frac{2}{5}) = 0.694$">
+
+</p><p>
+
+</p><ul>
+<li>5 * <tt>sunny</tt> =&gt; 2 * <tt>play</tt>
+</li>
+<li>4 * <tt>overcast</tt> =&gt; 4 * <tt>play</tt>
+</li>
+<li>5 * <tt>rain</tt> =&gt; 3 * <tt>play</tt>
+</li>
+</ul>
+
+<p>
+
+</p><h2><a name="SECTION00044000000000000000">
+Gain(X,T)</a>
+</h2>
+
+<p>
+Różnicę pomiędzy informacją potrzebną, by stwierdzić do jakiej klasy należy 
+element T, a informacją potrzebną, po tym jak poznaliśmy wartość atrybutu X
+definiujemy jako:
+
+</p><p>
+<!-- MATH
+ $Gain(X,T) = Info(T) - Info(X,T)$
+ -->
+<img width="311" height="37" align="MIDDLE" border="0" src="./Drzewo decyzyjne C4.5, czyli jak nauczyć komputer odróżniać dobro od zła_files/img7.png" alt="$Gain(X,T) = Info(T) - Info(X,T)$">
+
+</p><p>
+W przykładzie golfowym:
+
+</p><p>
+<!-- MATH
+ $Gain(Outlook,T) = Info(T) - Info(Outlook,T) = 0.94 - 0.694 = 0.246$
+ -->
+<img width="602" height="37" align="MIDDLE" border="0" src="./Drzewo decyzyjne C4.5, czyli jak nauczyć komputer odróżniać dobro od zła_files/img8.png" alt="$Gain(Outlook,T) = Info(T) - Info(Outlook,T) = 0.94 - 0.694 = 0.246$">
+
+</p><p>
+<!-- MATH
+ $Gain(Windy,T) = Info(T) - Info(Windy,T) = 0.94 - 0.892 = 0.048$
+ -->
+<img width="584" height="37" align="MIDDLE" border="0" src="./Drzewo decyzyjne C4.5, czyli jak nauczyć komputer odróżniać dobro od zła_files/img9.png" alt="$Gain(Windy,T) = Info(T) - Info(Windy,T) = 0.94 - 0.892 = 0.048$">
+
+</p><p>
+Widzimy więc, że Outlook daje większy zysk informacji niż Windy.
+
+<br>
+Budując drzewo decyzyjne będziemy się opierać na wartościach <tt>Gain</tt> 
+wyliczonych dla każdego atrybutu i umieszczać w korzeniu poddrzewa ten
+atrybut spośród tych, które jeszcze nie zostały umieszczone w drzewie a który
+ma największą wartość <tt>Gain</tt>. Dzięki temu zbudujemy małe drzewo decyzyjne,
+które będzie w stanie sklasyfikować odpowiednio nowe rekordy w kilku krokach.
+
+</p><p>
+
+</p><h2><a name="SECTION00045000000000000000">
+Gain Ratios</a>
+</h2>
+
+<p>
+Gain daje lepsze wyniki w przypadku, gdy atrybut ma dużą liczbę rożnych 
+wartości. Na przykład dla atrybutu D, który ma rozkład prawdopodobieństwa 
+(0,1) Info(D,T)=0 zaś Gain(D,T) jest maksymalne i równe Info(T). Problem możemy 
+zaobserwować w naszym przykładzie golfowym, Gain(Outlook,T) ma dużo większą wartość
+niż Gain(Windy,T), gdyż Outlook przyjmuje trzy wartości a Windy tylko dwie.
+Aby to zrównoważyć wprowadzono <tt>Gain Ratio</tt>:
+
+</p><p>
+<!-- MATH
+ $GainRatio(D,T) = \frac{Gain(D,T)}{SplitInfo(D,T)}$
+ -->
+<img width="269" height="45" align="MIDDLE" border="0" src="./Drzewo decyzyjne C4.5, czyli jak nauczyć komputer odróżniać dobro od zła_files/img10.png" alt="$GainRatio(D,T) = \frac{Gain(D,T)}{SplitInfo(D,T)}$">
+
+</p><p>
+gdzie SplitInfo(D,T) definiujemy następująco (zakładając że T1..Tm jest 
+podziałem T indukowanym przez D):
+
+</p><p>
+<!-- MATH
+ $SplitInfo(D,T) = I(\frac{T1}{T}, \frac{T2}{T}, \ldots, \frac{Tm}{T})$
+ -->
+<img width="305" height="40" align="MIDDLE" border="0" src="./Drzewo decyzyjne C4.5, czyli jak nauczyć komputer odróżniać dobro od zła_files/img11.png" alt="$SplitInfo(D,T) = I(\frac{T1}{T}, \frac{T2}{T}, \ldots, \frac{Tm}{T})$">
+
+</p><p>
+W przykładzie golfowym mamy:
+
+</p><ul>
+<li><!-- MATH
+ $SplitInfo(Outlook,T) = -\frac{5}{14} * \log(\frac{5}{14}) - 
+                               \frac{4}{14} * \log(\frac{4}{14}) - 
+                               \frac{5}{14} * \log(\frac{5}{14}) = 1.577$
+ -->
+<img width="617" height="40" align="MIDDLE" border="0" src="./Drzewo decyzyjne C4.5, czyli jak nauczyć komputer odróżniać dobro od zła_files/img12.png" alt="$SplitInfo(Outlook,T) = -\frac{5}{14} * \log(\frac{5}{14}) -
+\frac{4}{14} * \log(\frac{4}{14}) -
+\frac{5}{14} * \log(\frac{5}{14}) = 1.577$"> 
+
+<br><!-- MATH
+ $GainRatio(Outlook,T) = \frac{0.246}{1.577} = 0.156$
+ -->
+<img width="324" height="39" align="MIDDLE" border="0" src="./Drzewo decyzyjne C4.5, czyli jak nauczyć komputer odróżniać dobro od zła_files/img13.png" alt="$GainRatio(Outlook,T) = \frac{0.246}{1.577} = 0.156$">
+</li>
+<li><!-- MATH
+ $SplitInfo(Windy,T) = -\frac{6}{14} * \log(\frac{6}{14}) - 
+                             \frac{8}{14} * \log(\frac{8}{14}) = 
+                             \frac{6}{14} * 0.1.222 + \frac{8}{14} * 0.807 = 0.985$
+ -->
+<img width="712" height="40" align="MIDDLE" border="0" src="./Drzewo decyzyjne C4.5, czyli jak nauczyć komputer odróżniać dobro od zła_files/img14.png" alt="$SplitInfo(Windy,T) = -\frac{6}{14} * \log(\frac{6}{14}) -
+\frac{8}{14} * \log(\frac{8}{14}) =
+\frac{6}{14} * 0.1.222 + \frac{8}{14} * 0.807 = 0.985$">
+
+<br><!-- MATH
+ $GainRatio(Windy) = \frac{0.048}{0.985} = 0.049$
+ -->
+<img width="292" height="39" align="MIDDLE" border="0" src="./Drzewo decyzyjne C4.5, czyli jak nauczyć komputer odróżniać dobro od zła_files/img15.png" alt="$GainRatio(Windy) = \frac{0.048}{0.985} = 0.049$">
+</li>
+</ul>
+Otrzymaliśmy więc bardziej zrównoważone wyniki. Możemy zatem zamiast Gain używać GainRatio.
+  
+<h1><a name="SECTION00050000000000000000">
+Algorytm ID3</a>
+</h1>
+
+<p>
+Rekurencyjny algorytm budowy drzewa, który jako danych wejściowych potrzebuje:
+
+</p><ul>
+<li>zbiór przykładowych rekordów = Training Set T
+</li>
+<li>kategoria = categorical attribute C
+</li>
+<li>zbiór atrybutów = non-categorical attributes C1, C2, .., Cn
+</li>
+</ul>
+
+<p>
+</p><pre>   function ID3 (R: a set of non-categorical attributes,
+		 C: the categorical attribute,
+		 S: a training set) returns a decision tree;
+   begin
+	If S is empty, return a single node with value Failure;
+	If S consists of records all with the same value for 
+	   the categorical attribute, 
+	   return a single node with that value;
+	If R is empty, then return a single node with as value
+	   the most frequent of the values of the categorical attribute
+	   that are found in records of S; [note that then there
+	   will be errors, that is, records that will be improperly
+	   classified];
+	Let D be the attribute with largest Gain(D,S) 
+	   among attributes in R;
+	Let {dj| j=1,2, .., m} be the values of attribute D;
+	Let {Sj| j=1,2, .., m} be the subsets of S consisting 
+	   respectively of records with value dj for attribute D;
+	Return a tree with root labeled D and arcs labeled 
+	   d1, d2, .., dm going respectively to the trees 
+
+	     ID3(R-{D}, C, S1), ID3(R-{D}, C, S2), .., ID3(R-{D}, C, Sm);
+   end ID3;
+</pre>
+  
+<h1><a name="SECTION00060000000000000000">
+Cechy algorytmu ID3</a>
+</h1>
+
+<p>
+
+</p><h4><a name="SECTION00060010000000000000">
+Zalety</a>
+</h4>
+
+<ul>
+<li>prostota
+</li>
+<li>jeżeli w <tt>Training Set</tt> nie ma tzw. hałasu (ang. noise), czyli że 
+  nie ma rekordów które dla tych samych wartości atrybutów mają 
+  przypisaną różną kategorię, to ID3 daje poprawny wynik dla wszystkich
+  rekordów z <tt>Training Set</tt>.
+</li>
+</ul>
+
+<p>
+
+</p><h4><a name="SECTION00060020000000000000">
+Wady</a>
+</h4>
+
+<ul>
+<li>nie radzi sobie z ciągłymi dziedzinami atrybutów (zakłada, że wartośći
+  atrybutów są dyskretne)
+</li>
+<li>zakłada sztywno, że wszystkie rekordy w <tt>Training Set</tt> są wypełnione
+  tzn. nie działa, jeżeli choć jeden rekord zawiera niepełne dane.
+</li>
+<li>duży rozmiar drzewa
+</li>
+<li>brak odporności na zjawisko zwane <i>overfitting</i>. Polega to na tym, 
+  że algorytm nie radzi sobie z danymi zaburzającymi ogólną ich informację. 
+  Może to w rezultacie prowadzić do wysokiego współczynnika błędów na 
+  danych testowych.
+</li>
+</ul>
+  
+<h1><a name="SECTION00070000000000000000">
+C4.5, czyli dlaczego ID3 nam nie wystarczy?</a>
+</h1>
+Algorytm C4.5 (Quinlan) jest rozszerzeniem algorytmu ID3 wychodzącym naprzeciw 
+problemom napotkanym przez ID3. 
+
+<p>
+
+</p><h2><a name="SECTION00071000000000000000">
+Lekarstwo na techniczne ograniczenia ID3</a>
+</h2>
+
+<ul>
+<li><b>Budując drzewo decyzyjne</b> możemy rozwiązać przypadek, gdy rekordy 
+mają nieznaną wartość dla pewnych atrybutów. 
+<br>
+Gain jest wtedy wyliczane na podstawie tylko tych rekordów, gdzie dana
+wartość jest zdefiniowana.
+</li>
+<li><b>Używając drzewa decyzyjnego</b> umiemy sklasyfikować rekordy z 
+nieznaną wartością atrybutu poprzez wyliczenie prawdopodobieństwa możliwych
+wyników. 
+<br>
+Przykładowo dla golfa weźmy rekord, gdzie znany jest Outlook, a nieznana 
+Humidity. Widzimy, że rozkład prawdopodobieństwa jest (0.4, 0.6) dla 
+(play, don't play). 
+</li>
+<li>Atrybuty mogą mieć ciągłe wartości. 
+<br>
+Aby otrzymać podział dyskretny postępujemy następująco:
+
+<ul>
+<li>Rozpatrujemy wartości atrybutu w Training Set, ustawmy je rosnąco
+od <img width="26" height="34" align="MIDDLE" border="0" src="./Drzewo decyzyjne C4.5, czyli jak nauczyć komputer odróżniać dobro od zła_files/img16.png" alt="$A_1$"> do <img width="31" height="34" align="MIDDLE" border="0" src="./Drzewo decyzyjne C4.5, czyli jak nauczyć komputer odróżniać dobro od zła_files/img17.png" alt="$A_m$">. 
+</li>
+<li>Dla każdej wartości dzielimy zbiór rekordów na te, które mają wartość
+atrybutu <img width="44" height="34" align="MIDDLE" border="0" src="./Drzewo decyzyjne C4.5, czyli jak nauczyć komputer odróżniać dobro od zła_files/img18.png" alt="$\leq A_i$"> oraz na te, które mają wartość <img width="44" height="34" align="MIDDLE" border="0" src="./Drzewo decyzyjne C4.5, czyli jak nauczyć komputer odróżniać dobro od zła_files/img19.png" alt="$&gt; A_i$">.
+</li>
+<li>Wyliczamy gain, dla każdego takiego podziału.
+</li>
+<li>Wybieramy ten podział, dla którego gain jest największe.
+</li>
+</ul>
+Przykładowo dla golfa, jeśli rozważamy Humidity, po wykonaniu wszystkich 
+obliczeń wychodzi nam, iż najlepszym punktem podziału będzie wartość 75.
+Jako wartości dla atrybutu Humidity będziemy więc rozważać przy budowie drzewa
+zbiór <img width="90" height="33" align="MIDDLE" border="0" src="./Drzewo decyzyjne C4.5, czyli jak nauczyć komputer odróżniać dobro od zła_files/img20.png" alt="$\leq75, &gt; 75$">.
+</li>
+</ul>
+
+<p>
+
+</p><h2><a name="SECTION00072000000000000000">
+Przycinanie, czyli główny pomysł C4.5</a>
+</h2>
+W algorytmie ID3 głownym kłopotem był niepotrzebny rozrost drzewa i brak 
+mechanizmów przeciwdziałających zjawisku <i>overfitting-u</i>, co prowadziło 
+do dość wysokiego poziomu błędów dla rzeczywistych danych.
+Aby tego uniknąć stosuje się tzw.  <i>przycinanie (ang. pruning) </i>, w celu 
+zwiększenia generalizacji oceny. Konkretnie działa ono w następujący sposób:
+
+<p>
+
+</p><ul>
+<li>zaczyna od liści i działa BottomUp
+</li>
+<li>mając dany węzeł nie będący liściem i jego poddrzewo oblicza w heurystyczny 
+  sposób wartość przewidywanego błędu dla aktualnego poddrzewa.
+</li>
+<li>oblicza wartość przewidywanego błędu dla sytuacji, gdyby rozpatrywane 
+  poddrzewo zastąpić pojedynczym liściem z kategorią najpopularniejszą wśród
+  liści.
+</li>
+<li>porównuje te dwie wartości i ewentualnie dokonuje zamiany poddrzewa na 
+  pojedynczy liść propagując tę informację do swych przodków.
+</li>
+</ul>
+
+<p>
+Dzięki temu zabiegowi otrzymujemy większą generalizację oceny nowych 
+przypadków, a o to przecież nam chodziło.
+  
+</p><p>
+  
+</p><h1><a name="SECTION00080000000000000000">
+Implementacja algorytmu C4.5</a>
+</h1>
+W sieci ogólnodostępna jest implementacja algorytmu C4.5. Pakiet zawiera 
+zarówno program do tworzenia drzewa decyzyjnego, jak i do tworzenia 
+reguł wnioskowania na podstawie wygenerowanego drzewa oraz prostą aplikację 
+do zastosowania otrzymanych reguł do klasyfikacji nowych przypadków.
+
+<p>
+Poniżej zaprezentuję efekty testów dla znajomych przykładów.
+
+</p><p>
+
+</p><h2><a name="SECTION00081000000000000000">
+Nazewnictwo</a>
+</h2>
+Programy <tt>c4.5</tt> oraz <tt>c4.5rules</tt> jako domyślne parametry przyjmują 
+pliki <tt>problem.names</tt> z zakodowanymi dziedzinami oraz <tt>problem.data</tt> z 
+zakodowanym <tt>Training Set</tt>. Opcjonalnym parametrem jest zbiór danych 
+testowych <tt>problem.test</tt>.
+
+<p>
+
+</p><h2><a name="SECTION00082000000000000000">
+Wyniki</a>
+</h2>
+
+<h3><a name="SECTION00082100000000000000">
+Problem gry w golfa</a>
+</h3>
+Oto dane i wyniki dla problemu z grą w golfa:
+
+<p>
+
+</p><h4><a name="SECTION00082110000000000000">
+Atrybuty i ich dziedziny</a>
+</h4>
+
+<p>
+</p><pre>Play, Don't Play.
+
+outlook: sunny, overcast, rain.
+temperature: continuous.
+humidity: continuous.
+windy: true, false.
+</pre>
+
+<p>
+
+</p><h4><a name="SECTION00082120000000000000">
+Training Set</a>
+</h4>
+
+<p>
+</p><pre>sunny, 85, 85, false, Don't Play
+sunny, 80, 90, true, Don't Play
+overcast, 83, 78, false, Play
+rain, 70, 96, false, Play
+rain, 68, 80, false, Play
+rain, 65, 70, true, Don't Play
+overcast, 64, 65, true, Play
+sunny, 72, 95, false, Don't Play
+sunny, 69, 70, false, Play
+rain, 75, 80, false, Play
+sunny, 75, 70, true, Play
+overcast, 72, 90, true, Play
+overcast, 81, 75, false, Play
+rain, 71, 80, true, Don't Play
+</pre>
+
+<p>
+
+</p><h4><a name="SECTION00082130000000000000">
+Wyprodukowane drzewo</a>
+</h4>
+
+<p>
+</p><pre>C4.5 [release 8] decision tree generator	Wed Mar 17 20:18:34 2004
+----------------------------------------
+
+    Options:
+	File stem &lt;golf&gt;
+
+Read 14 cases (4 attributes) from golf.data
+
+Decision Tree:
+
+outlook = overcast: Play (4.0)
+outlook = sunny:
+|   humidity &lt;= 75 : Play (2.0)
+|   humidity &gt; 75 : Don't Play (3.0)
+outlook = rain:
+|   windy = true: Don't Play (2.0)
+|   windy = false: Play (3.0)
+
+
+Tree saved
+
+
+Evaluation on training data (14 items):
+
+	 Before Pruning           After Pruning
+	----------------   ---------------------------
+	Size      Errors   Size      Errors   Estimate
+
+	   8    0( 0.0%)      8    0( 0.0%)    (38.5%)   &lt;&lt;
+</pre>
+
+<p>
+
+</p><h4><a name="SECTION00082140000000000000">
+Otrzymane reguły</a>
+</h4>
+
+<p>
+</p><pre>C4.5 [release 8] rule generator	Wed Mar 17 20:18:44 2004
+-------------------------------
+
+    Options:
+	File stem &lt;golf&gt;
+
+Read 14 cases (4 attributes) from golf
+
+------------------
+Processing tree 0
+
+Final rules from tree 0:
+
+Rule 2:
+    	outlook = overcast
+	-&gt;  class Play  [70.7%]&lt;br&gt;
+
+Rule 4:
+    	outlook = rain
+    	windy = false
+	-&gt;  class Play  [63.0%]
+
+Rule 1:
+    	outlook = sunny
+    	humidity &gt; 75
+	-&gt;  class Don't Play  [63.0%]
+
+Rule 3:
+    	outlook = rain
+    	windy = true
+	-&gt;  class Don't Play  [50.0%]
+
+Default class: Play
+
+
+Evaluation on training data (14 items):
+
+Rule  Size  Error  Used  Wrong	          Advantage
+----  ----  -----  ----  -----	          ---------
+   2     1  29.3%     4      0 (0.0%)	     0 (0|0) 	Play
+   4     2  37.0%     3      0 (0.0%)	     0 (0|0) 	Play
+   1     2  37.0%     3      0 (0.0%)	     3 (3|0) 	Don't Play
+   3     2  50.0%     2      0 (0.0%)	     2 (2|0) 	Don't Play
+
+Tested 14, errors 0 (0.0%)   &lt;&lt;
+
+
+	  (a)  (b)	&lt;-classified as
+	 ---- ----
+	    9     	(a): class Play
+	         5	(b): class Don't Play
+</pre>
+
+<p>
+
+</p><h4><a name="SECTION00082150000000000000">
+Zabawa z interpreterem drzewa</a>
+</h4>
+<pre>C4.5 [release 8] decision tree interpreter      Thu Mar 18 20:59:20 2004
+------------------------------------------
+
+outlook: sunny
+humidity: 23
+
+Decision:
+        Play  CF = 1.00  [ 0.50 - 1.00 ]
+</pre>
+
+<p>
+
+</p><h3><a name="SECTION00082200000000000000">
+Problem rozpoznawania języka mówionego</a>
+</h3>
+Komputer ma rozpoznać, jaką pisownię ma człowiek na myśli wymawiając 
+identycznie brzmiące słowa. W naszym przypadku rozważamy słowa 
+<i>bare</i> i <i>bear</i>. Ma do dyspozycji informację o częściach mowy pięciu 
+wyrazów poprzedzających słowo, którego pisownie klasyfikujemy.
+
+<p>
+
+</p><h4><a name="SECTION00082210000000000000">
+Atrybuty i ich dziedziny</a>
+</h4>
+
+<p>
+</p><pre>bare, bear.
+
+pos1: none, verb, noun, adjective, adverb, article, connective, number, possessive, pronoun, interjection, modal, preposition.
+pos2: none, verb, noun, adjective, adverb, article, connective, number, possessive, pronoun, interjection, modal, preposition.
+pos3: none, verb, noun, adjective, adverb, article, connective, number, possessive, pronoun, interjection, modal, preposition.
+pos4: none, verb, noun, adjective, adverb, article, connective, number, possessive, pronoun, interjection, modal, preposition.
+pos5: none, verb, noun, adjective, adverb, article, connective, number, possessive, pronoun, interjection, modal, preposition.
+</pre>
+
+<p>
+
+</p><h4><a name="SECTION00082220000000000000">
+Training Set</a>
+</h4>
+
+<p>
+</p><pre>none, article, noun, verb, adverb, bare
+none, none, none, none, article, bare
+none, none, possessive, noun, verb, bare
+none, article, noun, noun, verb, bare
+verb, adverb, adverb, preposition, article, bare
+none, none, none, verb, adverb, bare
+none, none, none ,none, none, bare
+none, none, none, none, article, bear
+pronoun, verb, verb, preposition, article, bear
+none, none, pronoun, verb, article, bear
+none, none, adverb, noun, modal, bear
+none, none, adverb, noun, modal, bear
+none, pronoun, modal, pronoun, preposition, bear
+pronoun, verb, verb, pronoun, modal, bear
+none, none, none, verb, preposition, bear
+none, none, none, pronoun, modal, bear
+</pre>
+
+<p>
+
+</p><h4><a name="SECTION00082230000000000000">
+Wyprodukowane drzewo</a>
+</h4>
+
+<p>
+</p><pre>C4.5 [release 8] decision tree generator	Wed Mar 17 20:25:26 2004
+----------------------------------------
+
+    Options:
+	File stem &lt;bare&gt;
+
+Read 16 cases (5 attributes) from bare.data
+
+Decision Tree:
+
+pos5 = none: bare (1.0)
+pos5 = verb: bare (2.0)
+pos5 = noun: bear (0.0)
+pos5 = adjective: bear (0.0)
+pos5 = adverb: bare (2.0)
+pos5 = article: bear (5.0/2.0)
+pos5 = connective: bear (0.0)
+pos5 = number: bear (0.0)
+pos5 = possessive: bear (0.0)
+pos5 = pronoun: bear (0.0)
+pos5 = interjection: bear (0.0)
+pos5 = modal: bear (4.0)
+pos5 = preposition: bear (2.0)
+
+
+Tree saved
+
+
+Evaluation on training data (16 items):
+
+	 Before Pruning           After Pruning
+	----------------   ---------------------------
+	Size      Errors   Size      Errors   Estimate
+
+	  14    2(12.5%)     14    2(12.5%)    (51.0%)   &lt;&lt;
+</pre>
+
+<p>
+Jak widać program po czasowniku zawsze będzie mówił, że chodziło o misia, 
+zaś po czasowniku modalnym stwierdzi, że mieliśmy na myśli tolerowanie czegoś.
+
+</p><h1><a name="SECTION00090000000000000000">
+About this document ...</a>
+</h1>
+ <strong>Drzewo decyzyjne C4.5, czyli jak nauczyć komputer odróżniać dobro od zła</strong><p>
+This document was generated using the
+<a href="http://www.latex2html.org/"><strong>LaTeX</strong>2<tt>HTML</tt></a> translator Version 2002 (1.62)
+</p><p>
+Copyright  1993, 1994, 1995, 1996,
+<a href="http://cbl.leeds.ac.uk/nikos/personal.html">Nikos Drakos</a>, 
+Computer Based Learning Unit, University of Leeds.
+<br>
+Copyright  1997, 1998, 1999,
+<a href="http://www.maths.mq.edu.au/~ross/">Ross Moore</a>, 
+Mathematics Department, Macquarie University, Sydney.
+</p><p>
+The command line arguments were: <br>
+ <strong>latex2html</strong> <tt>-split 0 -local_icons -html_version 3.2,latin2,unicode c4_5Main.tex</tt>
+</p><p>
+The translation was initiated by Przemyslaw Strzelczak on 2004-03-19</p><hr>
+<!--Navigation Panel-->
+<img width="81" height="24" align="BOTTOM" border="0" alt="next_inactive" src="./Drzewo decyzyjne C4.5, czyli jak nauczyć komputer odróżniać dobro od zła_files/nx_grp_g.png"> 
+<img width="26" height="24" align="BOTTOM" border="0" alt="up" src="./Drzewo decyzyjne C4.5, czyli jak nauczyć komputer odróżniać dobro od zła_files/up_g.png"> 
+<img width="63" height="24" align="BOTTOM" border="0" alt="previous" src="./Drzewo decyzyjne C4.5, czyli jak nauczyć komputer odróżniać dobro od zła_files/prev_g.png">   
+<br>
+<!--End of Navigation Panel-->
+<address>
+Przemyslaw Strzelczak
+2004-03-19
+</address>
+
+
+</body></html>
