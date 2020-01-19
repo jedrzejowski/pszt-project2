@@ -26,7 +26,7 @@ class Attribute:
         return self._name
 
     def getValueName(self, index):
-        return self._name[index]
+        return self._names[index]
 
     def getIndex(self):
         from data.MyAttributes import MyAttributes

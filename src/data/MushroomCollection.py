@@ -3,7 +3,7 @@ from data.Mushroom import Mushroom
 from data.MyAttributes import MyAttributes
 
 
-class Collection:
+class MushroomCollection:
 
     def __init__(self, path_or_list):
         self._mushrooms = []
@@ -47,4 +47,4 @@ class Collection:
         if not MyAttributes[attr_index].isValueValid(value):
             raise Exception("wrong attribute valie")
 
-        return Collection(list(filter(lambda obj: obj.getAttrValue(attr_index) == value, self._mushrooms)))
+        return MushroomCollection(list(filter(lambda obj: obj.getAttrValue(attr_index) == value, self._mushrooms)))
