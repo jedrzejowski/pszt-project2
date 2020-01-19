@@ -78,4 +78,28 @@ def ID3(C: List[Attribute], R: List[Attribute], S: MushroomCollection) -> TreePa
 
 
 def C45(C, R, S):
-    pass
+    T = ID3(C, R, S)
+
+    if isinstance(T, TreeNode):
+
+        leaf_index = 0
+
+        def getLeaf(index: int, tree_node: TreeNode = T) -> TreeLeaf:
+            leaf_found = 0
+            current_element = TreeNode
+
+            while leaf_found != index + 1:
+                if isinstance(current_element, TreeNode):
+
+
+                if isinstance(current_element, TreeLeaf):
+
+
+        for i in range(0, T.getChildCount()):
+            e0 = 0
+            e1 = 0
+
+    else:
+        raise Exception("C45: fatal error")
+
+    return T
