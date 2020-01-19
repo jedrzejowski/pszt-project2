@@ -1,6 +1,7 @@
 from data.Attribute import Attribute
 
 MyAttributes = [
+    Attribute("edible", ["edible=e", "poisonous=p"]),
     Attribute("cap-shape", ["bell=b", "conical=c", "convex=x", "flat=f", "knobbed=k", "sunken=s"]),
     Attribute("cap-surface", ["fibrous=f", "grooves=g", "scaly=y", "smooth=s"]),
     Attribute("cap-color", ["brown=n", "buff=b", "cinnamon=c", "gray=g", "green=r", "pink=p",
