@@ -8,4 +8,4 @@ print(C45(
     MyAttributes[1:(len(MyAttributes) - 1)],
     MyAttributes[1:(len(MyAttributes) - 1)],
     myCollection
-).dump())
+))

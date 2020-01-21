@@ -5,8 +5,9 @@ from data.MyAttributes import MyAttributes
 
 class MushroomCollection:
 
-    def __init__(self, path_or_list):
+    def __init__(self, path_or_list, previous_collection=None):
         self._mushrooms = []
+        self._previous_collection = previous_collection
 
         # z pliku
         if isinstance(path_or_list, str):
@@ -43,8 +44,19 @@ class MushroomCollection:
 
         return s
 
+    def hasPrevious(self):
+        return self._previous_collection is not None
+
+    def getPrevious(self):
+        return self._previous_collection
+
     def filterByAttrValue(self, attr_index, value):
         if not MyAttributes[attr_index].isValueValid(value):
             raise Exception("wrong attribute valie")
 
-        return MushroomCollection(list(filter(lambda obj: obj.getAttrValue(attr_index) == value, self._mushrooms)))
+        return MushroomCollection(
+            list(filter(
+                lambda obj: obj.getAttrValue(attr_index) == value,
+                self._mushrooms
+            )),
+            self)

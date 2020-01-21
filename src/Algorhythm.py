@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Union
 import math
 
 from data.Attribute import Attribute
@@ -61,7 +61,14 @@ def Gain(X: Attribute, T: MushroomCollection):
 
 def ID3(C: List[Attribute], R: List[Attribute], S: MushroomCollection) -> TreePart:
     if S.isEmpty():
-        return TreeLeaf("S=∅ error")
+        if not S.hasPrevious():
+            raise Exception("ID3(): S is empty")
+
+        S = S.getPrevious()
+        C = MyAttributes[0]
+        values_count = list(map(lambda v: S.getCountOf(C.getIndex(), v), C.getValues()))
+        i = values_count.index(max(values_count))
+        return TreeLeaf(C.getValueName(i))
 
     if not R:
         C = MyAttributes[0]
@@ -77,27 +84,42 @@ def ID3(C: List[Attribute], R: List[Attribute], S: MushroomCollection) -> TreePa
     return TreeNode(D, branches)
 
 
+# def C45(C, R, S):
+#     pass
 def C45(C, R, S):
     T = ID3(C, R, S)
 
     if isinstance(T, TreeNode):
 
-        leaf_index = 0
-
-        def getLeaf(index: int, tree_node: TreeNode = T) -> TreeLeaf:
+        def getLeaf(index: int, tree_node: TreeNode = T) -> Union[TreeLeaf, int]:
             leaf_found = 0
-            current_element = TreeNode
 
-            while leaf_found != index + 1:
-                if isinstance(current_element, TreeNode):
+            for tree_part in tree_node.getChildren():
+                if isinstance(tree_part, TreeLeaf):
+                    leaf_found = leaf_found + 1
+                    if leaf_found == index + 1:
+                        return tree_part
 
+                if isinstance(tree_part, TreeNode):
+                    out = getLeaf(index - leaf_found, tree_part)
+                    if isinstance(out, int):
+                        leaf_found = leaf_found + out
+                    if isinstance(out, TreeLeaf):
+                        return out
 
-                if isinstance(current_element, TreeLeaf):
+            return leaf_found
 
+        leaf_index = 0
+        leaf = getLeaf(leaf_index, T)
 
-        for i in range(0, T.getChildCount()):
-            e0 = 0
-            e1 = 0
+        # iteracja po liściach
+        while isinstance(leaf, TreeLeaf):
+            print("it")
+            #
+            leaf_index = leaf_index + 1
+            leaf = getLeaf(leaf_index, T)
+
+        print(leaf, leaf_index)
 
     else:
         raise Exception("C45: fatal error")
