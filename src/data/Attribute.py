@@ -25,9 +25,6 @@ class Attribute:
     def isValueValid(self, value):
         return value in self._values
 
-    def getValuesCount(self):
-        return len(self._values)
-
     def getName(self):
         return self._name
 

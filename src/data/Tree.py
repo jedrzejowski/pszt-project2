@@ -83,9 +83,9 @@ class TreeNode(TreePart):
 
 class TreeLeaf(TreePart):
     def __init__(self, name, value):
-        self._value = value
         self._name = name
-        TreePart.__init__(self, name)
+        self._value = value
+        TreePart.__init__(self, value)
 
     def dump(self, prefix1: str = "", prefix2: str = "") -> str:
         return prefix1 + self.getName()

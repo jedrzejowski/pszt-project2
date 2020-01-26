@@ -88,7 +88,7 @@ def ID3(C: Attribute, R: List[Attribute], S: MushroomCollection) -> TreePart:
         C = MyAttributes[0]
         values_count = list(map(lambda v: S.getCountOf(C.getIndex(), v), C.getValues()))
         i = values_count.index(max(values_count))
-        return TreeLeaf(C.getValueName(i), C.getValue(i))
+        return TreeLeaf(C.getValueName(i), C.getValueName(i))
 
     # jeśli wszystkie obiekty w S są tej samej klasy:
     # zwróć liść zawierający tylko tę klasę
@@ -98,7 +98,9 @@ def ID3(C: Attribute, R: List[Attribute], S: MushroomCollection) -> TreePart:
             is_same = False
             break
     if is_same:
-        return TreeLeaf(MyAttributes[0].getName(), S.get(0).getAttrValue(0))
+        C = MyAttributes[0]
+        value_index = C.getValueIndex(S.get(0).getAttrValue(0))
+        return TreeLeaf(C.getName(), C.getValueName(value_index))
 
     # jeśli R=∅ :
     # zwróć liść zawierający klasę najczęstszą w S
