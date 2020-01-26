@@ -76,10 +76,10 @@ def e_T(T: TreeNode, S: MushroomCollection) -> float:
     return err + (math.sqrt(err * (1 - err)) / S.getCount())
 
 
-def ID3(C: List[Attribute], R: List[Attribute], S: MushroomCollection) -> TreePart:
-    R = R.copy() # python i jego referencje
+def ID3(C: Attribute, R: List[Attribute], S: MushroomCollection) -> TreePart:
+    R = R.copy()  # python i jego referencje
 
-    print(len(R))
+    # jeśli S=∅ : zwróć błąd
     if S.isEmpty():
         if not S.hasPrevious():
             raise Exception("ID3(): S is empty")
@@ -90,6 +90,18 @@ def ID3(C: List[Attribute], R: List[Attribute], S: MushroomCollection) -> TreePa
         i = values_count.index(max(values_count))
         return TreeLeaf(C.getValueName(i), C.getValue(i))
 
+    # jeśli wszystkie obiekty w S są tej samej klasy:
+    # zwróć liść zawierający tylko tę klasę
+    is_same = True
+    for i in range(1, S.getCount()):
+        if S.get(0).getAttrValue(0) != S.get(i).getAttrValue(0):
+            is_same = False
+            break
+    if is_same:
+        return TreeLeaf(MyAttributes[0].getName(), S.get(0).getAttrValue(0))
+
+    # jeśli R=∅ :
+    # zwróć liść zawierający klasę najczęstszą w S
     if not R:
         C = MyAttributes[0]
         values_count = list(map(lambda v: S.getCountOf(C.getIndex(), v), C.getValues()))
