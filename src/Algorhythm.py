@@ -148,26 +148,29 @@ def C45(C, R, S):
 
         # Dla każdego liścia T :
         while isinstance(leaf, TreeLeaf):
+            # print("new left", leaf_index)
             # Dla każdego węzła w na drodze liść-korzeń :
             node = leaf.getParent()
             while node != T:
                 # wyciągamy przypadki tyczące się wtylko naszego drzewa
+                C = MyAttributes[0]
                 S_node = filterCollectionToTreeNode(T, node, S)
                 # e0
                 e_0 = e_T(node, S_node)
                 # e1
-                histogram = [0] * (MyAttributes[0].getValuesCount() + 1)
+                histogram = [0] * (C.getValuesCount() + 1)
                 for i in range(0, S_node.getCount()):
                     mushroom = S_node.get(i)
-                    value_index = MyAttributes[0].getValueIndex(mushroom.getAttrValue(0))
+                    value_index = C.getValueIndex(mushroom.getAttrValue(0))
                     histogram[value_index] = histogram[value_index] + 1
                 most_value_index = histogram.index(max(histogram))
                 e_1 = max(histogram) / S_node.getCount()
                 #
                 node = node.getParent()
                 if e_0 >= e_1:
-                    node.setChild(most_value_index, TreeLeaf(MyAttributes[0].getValueName(most_value_index),
-                                                             MyAttributes[0].getValue(most_value_index)))
+                    C = MyAttributes[0]
+                    node.setChild(most_value_index, TreeLeaf(C.getName(),
+                                                             C.getValueName(most_value_index)))
             #
             leaf_index = leaf_index + 1
             leaf = getLeaf(leaf_index, T)
@@ -199,7 +202,7 @@ def filterCollectionToTreeNode(T_top: TreeNode, T_me: TreeNode, S: MushroomColle
         S = S.filterByAttrValue(attribute.getIndex(), attribute.getValue(value_index))
 
         T_current = T_parent
-        if T_parent == T_top:
+        if T_current == T_top:
             break
 
     return S
