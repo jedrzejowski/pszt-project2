@@ -33,14 +33,24 @@ class TreeNode(TreePart):
         self._children = children
         TreePart.__init__(self, attribute.getName())
 
-    def getChild(self, i: int) -> TreePart:
-        return self._children[i]
+        for child in self._children:
+            child.setParent(self)
+
+    def getChild(self, value_index: int) -> TreePart:
+        return self._children[value_index]
+
+    def setChild(self, value_index: int, child: TreePart) -> TreePart:
+        self._children[value_index] = child
+        child.setParent(self)
 
     def getChildCount(self):
         return len(self._children)
 
     def getChildren(self):
         return self._children
+
+    def getAttribute(self):
+        return self._attribute
 
     def dump(self, prefix1: str = "", prefix2: str = "") -> str:
         # https://www.utf8-chartable.de/unicode-utf8-table.pl?start=9472&unicodeinhtml=dec
@@ -72,9 +82,13 @@ class TreeNode(TreePart):
 
 
 class TreeLeaf(TreePart):
-    def __init__(self, value):
+    def __init__(self, name, value):
         self._value = value
-        TreePart.__init__(self, value)
+        self._name = name
+        TreePart.__init__(self, name)
 
     def dump(self, prefix1: str = "", prefix2: str = "") -> str:
         return prefix1 + self.getName()
+
+    def getValue(self) -> str:
+        return self._value

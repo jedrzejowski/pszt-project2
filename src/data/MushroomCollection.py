@@ -50,6 +50,9 @@ class MushroomCollection:
     def getPrevious(self):
         return self._previous_collection
 
+    def filter(self, filter_func):
+        return MushroomCollection(list(filter(filter_func, self._mushrooms)), self)
+
     def filterByAttrValue(self, attr_index, value):
         if not MyAttributes[attr_index].isValueValid(value):
             raise Exception("wrong attribute valie")

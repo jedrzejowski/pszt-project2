@@ -1,6 +1,7 @@
 from typing import List, Union
 import math
 
+from data import Mushroom
 from data.Attribute import Attribute
 from data.MushroomCollection import MushroomCollection
 from data.MyAttributes import MyAttributes
@@ -59,7 +60,26 @@ def Gain(X: Attribute, T: MushroomCollection):
     return Info1(T) - Info2(X, T)
 
 
+def e_S(T: TreeNode, S: MushroomCollection) -> float:
+    error_count = 0
+    for i in range(0, S.getCount()):
+        mushroom = S.get(i)
+        # print(mushroom.getAttrValue(0), makeDecision(T, mushroom))
+        if mushroom.getAttrValue(0) != makeDecision(T, mushroom):
+            error_count = error_count + 1
+
+    return error_count / S.getCount()
+
+
+def e_T(T: TreeNode, S: MushroomCollection) -> float:
+    err = e_S(T, S)
+    return err + (math.sqrt(err * (1 - err)) / S.getCount())
+
+
 def ID3(C: List[Attribute], R: List[Attribute], S: MushroomCollection) -> TreePart:
+    R = R.copy() # python i jego referencje
+
+    print(len(R))
     if S.isEmpty():
         if not S.hasPrevious():
             raise Exception("ID3(): S is empty")
@@ -68,13 +88,13 @@ def ID3(C: List[Attribute], R: List[Attribute], S: MushroomCollection) -> TreePa
         C = MyAttributes[0]
         values_count = list(map(lambda v: S.getCountOf(C.getIndex(), v), C.getValues()))
         i = values_count.index(max(values_count))
-        return TreeLeaf(C.getValueName(i))
+        return TreeLeaf(C.getValueName(i), C.getValue(i))
 
     if not R:
         C = MyAttributes[0]
         values_count = list(map(lambda v: S.getCountOf(C.getIndex(), v), C.getValues()))
         i = values_count.index(max(values_count))
-        return TreeLeaf(C.getValueName(i))
+        return TreeLeaf(C.getValueName(i), C.getValue(i))
 
     gains = list(map(lambda a: Gain(a, S), R))
     D = R.pop(gains.index(max(gains)))
@@ -112,16 +132,60 @@ def C45(C, R, S):
         leaf_index = 0
         leaf = getLeaf(leaf_index, T)
 
-        # iteracja po liściach
+        # Dla każdego liścia T :
         while isinstance(leaf, TreeLeaf):
-            print("it")
+            # Dla każdego węzła w na drodze liść-korzeń :
+            node = leaf.getParent()
+            while node != T:
+                # wyciągamy przypadki tyczące się wtylko naszego drzewa
+                S_node = filterCollectionToTreeNode(T, node, S)
+                # e0
+                e_0 = e_T(node, S_node)
+                # e1
+                histogram = [0] * (MyAttributes[0].getValuesCount() + 1)
+                for i in range(0, S_node.getCount()):
+                    mushroom = S_node.get(i)
+                    value_index = MyAttributes[0].getValueIndex(mushroom.getAttrValue(0))
+                    histogram[value_index] = histogram[value_index] + 1
+                most_value_index = histogram.index(max(histogram))
+                e_1 = max(histogram) / S_node.getCount()
+                #
+                node = node.getParent()
+                if e_0 >= e_1:
+                    node.setChild(most_value_index, TreeLeaf(MyAttributes[0].getValueName(most_value_index),
+                                                             MyAttributes[0].getValue(most_value_index)))
             #
             leaf_index = leaf_index + 1
             leaf = getLeaf(leaf_index, T)
-
-        print(leaf, leaf_index)
 
     else:
         raise Exception("C45: fatal error")
 
     return T
+
+
+def makeDecision(T: TreeNode, mushroom: Mushroom) -> str:
+    while True:
+        attr_index = T.getAttribute().getIndex()
+        value = mushroom.getAttrValue(attr_index)
+        value_index = MyAttributes[attr_index].getValueIndex(value)
+        T = T.getChild(value_index)
+
+        if isinstance(T, TreeLeaf):
+            return T.getValue()
+
+
+def filterCollectionToTreeNode(T_top: TreeNode, T_me: TreeNode, S: MushroomCollection) -> MushroomCollection:
+    T_current = T_me
+    while True:
+        T_parent = T_current.getParent()  # bierzemy rodzina
+        value_index = T_parent.getChildren().index(T_current)  # bierzemy index w rodzicu
+        attribute = T_parent.getAttribute()  # i na jego podstawie bierzemy atrubut jakim są połączeni
+
+        S = S.filterByAttrValue(attribute.getIndex(), attribute.getValue(value_index))
+
+        T_current = T_parent
+        if T_parent == T_top:
+            break
+
+    return S

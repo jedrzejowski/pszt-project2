@@ -10,11 +10,17 @@ class Attribute:
             self._values.append(value)
             self._names.append(name)
 
+    def getValuesCount(self):
+        return len(self._values)
+
     def getValues(self):
         return self._values
 
     def getValue(self, index):
         return self._values[index]
+
+    def getValueIndex(self, value):
+        return self._values.index(value)
 
     def isValueValid(self, value):
         return value in self._values
