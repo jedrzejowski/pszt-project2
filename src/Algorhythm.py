@@ -158,13 +158,9 @@ def C45(C, R, S):
                 # e0
                 e_0 = e_T(node, S_node)
                 # e1
-                histogram = [0] * (C.getValuesCount() + 1)
-                for i in range(0, S_node.getCount()):
-                    mushroom = S_node.get(i)
-                    value_index = C.getValueIndex(mushroom.getAttrValue(0))
-                    histogram[value_index] = histogram[value_index] + 1
-                most_value_index = histogram.index(max(histogram))
-                e_1 = max(histogram) / S_node.getCount()
+                values_count = list(map(lambda v: S.getCountOf(C.getIndex(), v), C.getValues()))
+                most_value_index = values_count.index(max(values_count))
+                e_1 = (1 - max(values_count)) / S_node.getCount()
                 #
                 node = node.getParent()
                 if e_0 >= e_1:
