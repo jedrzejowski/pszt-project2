@@ -160,12 +160,20 @@ Postanowiliśmy pomieszać próbki za pomocą `random.shuffle`, która używa so
 
 Jak widzimy dało to bardzo dobre skutki.
 Już przy 100 próbkach treningowych, algorytmy dają bardzo dobre wyniki na poziomie 2%.
-Dalej, aż do 1000 próbek nie widać poprawy, potem błędy spadają do zera.
+Dalej, aż do 1000 próbek uczących nie widać poprawy, ale potem błędy spadają do zera.
+
+Dla pewności uruchomiliśmy program kilka razy i zawsze dawał podobne wyniki.
 
 Jak widać algorytm C4.5 w niektórych przypadkach pogarsza wyniki drzewa ID3, chodź z samego algorytmu wynika, że powinno polepszać.
 Nie wiemy czym jest to spowodowane.
 
 ## Kod programu
+
+Aby uruchomić program należy wpisać następujące komendy:
+```bash
+cd src
+./main.py
+```
 
 Wszystkie algorytmy związane z wyznaczanie drzewa są zaimplementowane w pliku `src/Algorhythm.py`.
 Struktura drzewa jest w `src/Tree.py`.
