@@ -185,7 +185,7 @@ def makeDecision(T: TreeNode, mushroom: Mushroom) -> str:
         T = T.getChild(value_index)
 
         if isinstance(T, TreeLeaf):
-            return T.getValue()
+            return T.getValue()[0]
 
 
 def filterCollectionToTreeNode(T_top: TreeNode, T_me: TreeNode, S: MushroomCollection) -> MushroomCollection:
