@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+
 import random
 
 from Algorhythm import ID3, C45, makeDecision, testTree
