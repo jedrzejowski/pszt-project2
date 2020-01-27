@@ -1,6 +1,6 @@
 import random
 
-from Algorhythm import ID3, C45, makeDecision
+from Algorhythm import ID3, C45, makeDecision, testTree
 from data.MushroomCollection import MushroomCollection
 from data.MyAttributes import MyAttributes
 from data.Tree import TreeNode
@@ -16,18 +16,6 @@ def newCollection(start, end) -> MushroomCollection:
 
 
 max_data = 8124 - 1
-
-
-def testTree(T: TreeNode, S: MushroomCollection):
-    wrong = 0
-
-    for i in range(1, S.getCount()):
-        mushroom = S.get(i)
-        # print(makeDecision(T, mushroom), mushroom.getAttrValue(0))
-        if makeDecision(T, mushroom) != mushroom.getAttrValue(0):
-            wrong = wrong + 1
-
-    return wrong / S.getCount()
 
 
 def makeTest(spacer):
@@ -54,11 +42,12 @@ def makeTest(spacer):
     # print(id3.dump())
 
     print("| [ " + str(0) + " : " + str(spacer) + " ] | " +
-          "[ " + str(spacer + 1) + " : " + str(max_data) + " ] | " +
-          str(e1) + " | " +
-          str(e2) + " | ")
+          "[ " + str(spacer + 1) + " : " + str(max_data) + " ] | `" +
+          str(e1) + "` | `" + str(e2) + "` | ")
 
 
+print("| Zbiór treningowy | Zbiór testujący | Wynik ID3 | Wynik C4.5 |")
+print("| --- | --- | --- | --- |")
 for i in range(100, 1000, 100):
     makeTest(i)
 for i in range(1000, max_data, 1000):

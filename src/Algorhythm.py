@@ -60,19 +60,20 @@ def Gain(X: Attribute, T: MushroomCollection):
     return Info1(T) - Info2(X, T)
 
 
-def e_S(T: TreeNode, S: MushroomCollection) -> float:
-    error_count = 0
-    for i in range(0, S.getCount()):
-        mushroom = S.get(i)
-        # print(mushroom.getAttrValue(0), makeDecision(T, mushroom))
-        if mushroom.getAttrValue(0) != makeDecision(T, mushroom):
-            error_count = error_count + 1
+def testTree(T: TreeNode, S: MushroomCollection):
+    wrong = 0
 
-    return error_count / S.getCount()
+    for i in range(1, S.getCount()):
+        mushroom = S.get(i)
+        # print(makeDecision(T, mushroom), mushroom.getAttrValue(0))
+        if makeDecision(T, mushroom) != mushroom.getAttrValue(0):
+            wrong = wrong + 1
+
+    return wrong / S.getCount()
 
 
 def e_T(T: TreeNode, S: MushroomCollection) -> float:
-    err = e_S(T, S)
+    err = testTree(T, S)
     return err + (math.sqrt(err * (1 - err)) / S.getCount())
 
 
