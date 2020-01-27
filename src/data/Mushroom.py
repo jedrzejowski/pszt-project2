@@ -2,18 +2,15 @@ from data.MyAttributes import MyAttributes
 
 
 class Mushroom:
+    """
+    Reprezentacja grzyba, pierwszy argument jest klasą
+    """
 
-    def __init__(self, line: str):
+    def __init__(self, line):
         self._attrs = line.split()[0].split(',')
         self._assertAttrs()
 
-    def isPositive(self) -> bool:
-        return self._attrs[0] == 'e'
-
-    def isNegative(self) -> bool:
-        return self._attrs[0] == 'p'
-
-    def getAttrValue(self, attr_index: int):
+    def getAttrValue(self, attr_index):
         return self._attrs[attr_index]
 
     def _assertAttrs(self):

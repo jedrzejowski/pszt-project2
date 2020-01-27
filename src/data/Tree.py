@@ -1,7 +1,6 @@
 from typing import List
 
 from data.Attribute import Attribute
-from data.MushroomCollection import MushroomCollection
 
 
 class TreePart:
@@ -15,7 +14,7 @@ class TreePart:
     def getParent(self):
         return self._parent
 
-    def hasParent(self) -> bool:
+    def hasParent(self):
         return self._parent is None
 
     def setParent(self, new_parent):
@@ -23,12 +22,12 @@ class TreePart:
             raise Exception("TreePart.setParent(): new_parent is not TreePart")
         self._parent = new_parent
 
-    def dump(self, prefix1: str = "", prefix2: str = "") -> str:
+    def dump(self, prefix1="", prefix2=""):
         pass
 
 
 class TreeNode(TreePart):
-    def __init__(self, attribute: Attribute, children: List[TreePart]):
+    def __init__(self, attribute, children):
         self._attribute = attribute
         self._children = children
         TreePart.__init__(self, attribute.getName())
@@ -36,10 +35,10 @@ class TreeNode(TreePart):
         for child in self._children:
             child.setParent(self)
 
-    def getChild(self, value_index: int) -> TreePart:
+    def getChild(self, value_index):
         return self._children[value_index]
 
-    def setChild(self, value_index: int, child: TreePart) -> TreePart:
+    def setChild(self, value_index, child):
         self._children[value_index] = child
         child.setParent(self)
 
@@ -52,7 +51,7 @@ class TreeNode(TreePart):
     def getAttribute(self):
         return self._attribute
 
-    def dump(self, prefix1: str = "", prefix2: str = "") -> str:
+    def dump(self, prefix1="", prefix2=""):
         # https://www.utf8-chartable.de/unicode-utf8-table.pl?start=9472&unicodeinhtml=dec
         line = ' ┃ '
         middle = ' ┣━'
@@ -87,8 +86,8 @@ class TreeLeaf(TreePart):
         self._value = value
         TreePart.__init__(self, value)
 
-    def dump(self, prefix1: str = "", prefix2: str = "") -> str:
+    def dump(self, prefix1="", prefix2=""):
         return prefix1 + self.getName()
 
-    def getValue(self) -> str:
+    def getValue(self):
         return self._value

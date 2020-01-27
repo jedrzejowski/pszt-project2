@@ -1,9 +1,11 @@
-from typing import Callable
 from data.Mushroom import Mushroom
 from data.MyAttributes import MyAttributes
 
 
 class MushroomCollection:
+    """
+    Klasa reprezentuje listę grybów z dodatkami ułatwiającymi jej użytkowanie
+    """
 
     def __init__(self, path_or_list, previous_collection=None):
         self._mushrooms = []
@@ -26,17 +28,17 @@ class MushroomCollection:
         if isinstance(path_or_list, list):
             self._mushrooms = path_or_list
 
-    def getCount(self) -> int:
+    def getCount(self):
         return len(self._mushrooms)
 
-    def isEmpty(self) -> bool:
+    def isEmpty(self):
         return len(self._mushrooms) == 0
 
-    def get(self, i: int) -> Mushroom:
+    def get(self, i):
         return self._mushrooms[i]
 
-    def getCountOf(self, attr_index: int, value) -> int:
-        s: int = 0
+    def getCountOf(self, attr_index, value):
+        s = 0
 
         for mushroom in self._mushrooms:
             if mushroom.getAttrValue(attr_index) == value:
@@ -50,10 +52,13 @@ class MushroomCollection:
     def getPrevious(self):
         return self._previous_collection
 
-    def filter(self, filter_func):
-        return MushroomCollection(list(filter(filter_func, self._mushrooms)), self)
-
     def filterByAttrValue(self, attr_index, value):
+        """
+        Filtrowanie grzybów po wartości atrybutu
+        :param attr_index:
+        :param value:
+        :return:
+        """
         if not MyAttributes[attr_index].isValueValid(value):
             raise Exception("wrong attribute valie")
 

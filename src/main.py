@@ -3,10 +3,9 @@ import random
 from Algorhythm import ID3, C45, makeDecision, testTree
 from data.MushroomCollection import MushroomCollection
 from data.MyAttributes import MyAttributes
-from data.Tree import TreeNode
 
 
-def newCollection(start, end) -> MushroomCollection:
+def newCollection(start, end):
     collection = MushroomCollection("../assets/agaricus-lepiota.data")
     if end == -1:
         end = len(collection._mushrooms)

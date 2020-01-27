@@ -1,5 +1,8 @@
 from data.Attribute import Attribute
 
+"""
+Lista atrybutów grzybów
+"""
 MyAttributes = [
     Attribute("edible", ["edible=e", "poisonous=p"]),
     Attribute("cap-shape", ["bell=b", "conical=c", "convex=x", "flat=f", "knobbed=k", "sunken=s"]),

@@ -167,6 +167,9 @@ Nie wiemy czym jest to spowodowane.
 
 ## Kod programu
 
+Wszystkie algorytmy związane z wyznaczanie drzewa są zaimplementowane w pliku `src/Algorhythm.py`.
+Struktura drzewa jest w `src/Tree.py`.
+Algorytmy ID3 i C45 zwracają drzewo, które można wyświetlić w następujący sposób `print(ID3(...).dump())`.
 
 ## Autorzy
 

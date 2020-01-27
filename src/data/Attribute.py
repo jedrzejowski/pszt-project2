@@ -1,4 +1,9 @@
 class Attribute:
+    """
+    Klasa reprezentuje właściwość grzyba, czyli atrybut lub klasę
+
+    Każdy atrybut na nazwę i wartości, które też mają nazwy
+    """
 
     def __init__(self, name, values):
         self._name = name

@@ -10,7 +10,7 @@ from data.Tree import TreeNode, TreeLeaf, TreePart
 Vector = List[float]
 
 
-def I(P: Vector) -> float:
+def I(P):
     def myLog(p):
         if p == 0:
             return 0
@@ -27,7 +27,7 @@ def I(P: Vector) -> float:
     return out
 
 
-def Info1(T: MushroomCollection):
+def Info1(T):
     P = list()
 
     C = MyAttributes[0]
@@ -41,7 +41,7 @@ def Info1(T: MushroomCollection):
     return I(P)
 
 
-def Info2(X: Attribute, T: MushroomCollection):
+def Info2(X, T):
     sigma = list()
 
     for value in X.getValues():
@@ -56,11 +56,11 @@ def Info2(X: Attribute, T: MushroomCollection):
     return out
 
 
-def Gain(X: Attribute, T: MushroomCollection):
+def Gain(X, T):
     return Info1(T) - Info2(X, T)
 
 
-def testTree(T: TreeNode, S: MushroomCollection):
+def testTree(T, S):
     wrong = 0
 
     for i in range(1, S.getCount()):
@@ -72,12 +72,12 @@ def testTree(T: TreeNode, S: MushroomCollection):
     return wrong / S.getCount()
 
 
-def e_T(T: TreeNode, S: MushroomCollection) -> float:
+def e_T(T, S):
     err = testTree(T, S)
     return err + (math.sqrt(err * (1 - err)) / S.getCount())
 
 
-def ID3(C: Attribute, R: List[Attribute], S: MushroomCollection) -> TreePart:
+def ID3(C, R, S):
     R = R.copy()  # python i jego referencje
 
     # jeśli S=∅ : zwróć błąd
@@ -126,7 +126,7 @@ def C45(C, R, S):
 
     if isinstance(T, TreeNode):
 
-        def getLeaf(index: int, tree_node: TreeNode = T) -> Union[TreeLeaf, int]:
+        def getLeaf(index, tree_node=T):
             leaf_found = 0
 
             for tree_part in tree_node.getChildren():
@@ -178,7 +178,7 @@ def C45(C, R, S):
     return T
 
 
-def makeDecision(T: TreeNode, mushroom: Mushroom) -> str:
+def makeDecision(T, mushroom):
     while True:
         attr_index = T.getAttribute().getIndex()
         value = mushroom.getAttrValue(attr_index)
@@ -189,7 +189,7 @@ def makeDecision(T: TreeNode, mushroom: Mushroom) -> str:
             return T.getValue()[0]
 
 
-def filterCollectionToTreeNode(T_top: TreeNode, T_me: TreeNode, S: MushroomCollection) -> MushroomCollection:
+def filterCollectionToTreeNode(T_top, T_me, S):
     T_current = T_me
     while True:
         T_parent = T_current.getParent()  # bierzemy rodzina
